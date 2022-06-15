@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CollectionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,42 +19,58 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+# === route untuk halaman awal ===
 Route::get('/', [PageController::class, 'index']);
-
 
 // route untuk halaman login
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-
 // route untuk halaman admin dashboard
 Route::get('/dashboard', [DashboardAdminController::class, 'index'])->middleware('auth');
 Route::get('/dashboard/buku', [DashboardAdminController::class, 'listBuku'])->middleware('auth');
 Route::get('/dashboard/member', [DashboardAdminController::class, 'listMember'])->middleware('auth');
-Route::get('/dashboard/peminjaman', [DashboardAdminController::class, 'listPinjam'])->middleware('auth');
-
+Route::get('/dashboard/transaksi', [DashboardAdminController::class, 'listTransaksi'])->middleware('auth');
 
 # === route untuk halaman member ===
-Route::get('/dashboard/member/detail', [MemberController::class, 'show']);
 // route tambah member
 Route::get('/dashboard/member/tambah', [MemberController::class, 'create']);
 Route::post('/dashboard/member', [MemberController::class,'store']);
 // route update member
-Route::get('/dashboard/member/update', [MemberController::class, 'edit']);
+Route::get('/dashboard/member/{member}/edit', [MemberController::class, 'edit']);
 Route::put('/dashboard/member/{member}', [MemberController::class, 'update']);
 // route delete member
-// Route::delete('/dashboard/member/{member}', [MemberController::class, 'destroy']);
-Route::delete('/dashboard/member/{member}', [MemberController::class, 'destroy'])->name('members.destroy');
-
+Route::delete('/dashboard/member/{member}', [MemberController::class, 'destroy']);
 
 # === route untuk halaman buku ===
-Route::get('/dashboard/buku/detail', [BookController::class, 'show']);
+// route menampilkan detail buku
+Route::get('/dashboard/buku/detail/{book}', [BookController::class, 'show']);
 // route tambah buku
 Route::get('/dashboard/buku/tambah', [BookController::class, 'create']);
 Route::post('/dashboard/buku', [BookController::class,'store']);
+// route update buku
+Route::get('/dashboard/buku/{book}/edit', [BookController::class, 'edit']);
+Route::put('/dashboard/buku/{book}', [BookController::class, 'update']);
 // route delete buku
-Route::delete('/dashboard/buku/{book}', [BookController::class, 'destroy'])->name('books.destroy');
+Route::delete('/dashboard/buku/{book}', [BookController::class, 'destroy']);
+
+# === route untuk halaman koleksi ===
+// route menampilkan koleksi buku
+Route::get('/dashboard/buku/detail/{book}/koleksi', [BookController::class, 'showCollection']);
+// route tambah koleksi
+Route::get('/dashboard/buku/detail/{book}/koleksi/tambah/', [CollectionController::class, 'create']);
+Route::post('/dashboard/buku/detail/{book}/koleksi', [CollectionController::class,'store']);
+// route update koleksi
+Route::get('/dashboard/buku/{book}/edit', [BookController::class, 'edit']);
+Route::put('/dashboard/buku/{book}', [BookController::class, 'update']);
+// route delete koleksi
+Route::delete('/dashboard/buku/detail/{book}/koleksi/{collection}', [CollectionController::class, 'destroy']);
+
+# === route untuk halaman transaksi ===
+
+
+
 
 
 // Route::get('/member/tambah-member', function () {

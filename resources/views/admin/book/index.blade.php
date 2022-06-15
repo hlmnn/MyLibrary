@@ -48,7 +48,6 @@
                                 <th>Penerbit</th>
                                 <th>Tahun</th>
                                 <th>Kategori</th>
-                                <th>Stok</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -56,6 +55,7 @@
                             @forelse ($books as $book)
                             <tr>
                                 <td>{{ $loop->iteration + $books->firstItem() - 1 }}</td>
+                                {{-- <td> <img src="{{ asset('storage/'.$book->image) }}" alt="{{ $book->judul }}"></td> --}}
                                 <td>{{ $book->kode_buku }}</td>
                                 <td>{{ $book->isbn }}</td>
                                 <td>{{ $book->judul }}</td>
@@ -63,12 +63,11 @@
                                 <td>{{ $book->publisher }}</td>
                                 <td>{{ $book->tahun_terbit }}</td>
                                 <td>{{ $book->kategori }}</td>
-                                <td>{{ $book->stok }}</td>
                                 <td>
                                     <div>
-                                        <a href="/dashboard/buku/detail"><button type="button" class="btn btn-success">Detail</button></a>
-                                        <a href="/dashboard/buku/update/"><button type="button" class="btn btn-warning">Edit</button></a>
-                                        <form action="{{ route('books.destroy', ['book' => $book->id]) }}" method="post" class="d-inline">
+                                        <a href="/dashboard/buku/detail/{{ $book->id }}"><button type="button" class="btn btn-success">Detail</button></a>
+                                        <a href="/dashboard/buku/{{ $book->id }}/edit/"><button type="button" class="btn btn-warning">Edit</button></a>
+                                        <form action="/dashboard/buku/{{ $book->id }}" method="post" class="d-inline">
                                             @method('DELETE')
                                             @csrf
                                             <button class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')">Hapus</button>
@@ -85,7 +84,7 @@
                     </table>
                 </div>
                 <div class="d-flex justify-content-start">
-                    {{-- {{ $members->links() }} --}}
+                    {{ $books->links() }}
                 </div>
             </div>
         </div>

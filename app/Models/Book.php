@@ -12,6 +12,12 @@ class Book extends Model
 
     protected $guarded = ['id'];
 
+    // relasi koleksi
+    public function collection()
+    {
+        return $this->hasMany(Collection::class);
+    }
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? false, function($query, $search) {
@@ -21,8 +27,7 @@ class Book extends Model
                     ->orWhere('author', 'like', '%' . $search . '%')
                     ->orWhere('publisher', 'like', '%' . $search . '%')
                     ->orWhere('tahun_terbit', 'like', '%' . $search . '%')
-                    ->orWhere('kategori', 'like', '%' . $search . '%')
-                    ->orWhere('stok', 'like', '%' . $search . '%');
+                    ->orWhere('kategori', 'like', '%' . $search . '%');
         });
     }
 

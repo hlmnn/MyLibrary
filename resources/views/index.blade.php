@@ -42,7 +42,7 @@
         <div class="card border-0 shadow my-5" >
             <div class="card-body p-5 text-center">
                 <h1 class="">Selamat Datang di MyLibrary</h1>
-                <p class="lead">Libray Management System</p>
+                <p class="lead">Library Management System</p>
                 <hr>
                 <p>Copyright &copy; 2022 by Hilman Fauzi Herdiana</p>
             </div>

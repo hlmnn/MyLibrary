@@ -56,8 +56,9 @@
                                 <td>{{ $member->nomor }}</td>
                                 <td>
                                     <div>
-                                        <a href="/dashboard/member/update/"><button type="button" class="btn btn-warning">Edit</button></a>
-                                        <form action="{{ route('members.destroy', ['member' => $member->id]) }}" method="post" class="d-inline">
+                                        <a href="/dashboard/member/{{ $member->id }}/edit/"><button type="button" class="btn btn-warning">Edit</button></a>
+                                        {{-- <form action="{{ route('members.destroy', ['member' => $member->id]) }}" method="post" class="d-inline"> --}}
+                                        <form action="/dashboard/member/{{ $member->id }}" method="post" class="d-inline">
                                             @method('DELETE')
                                             @csrf
                                             <button class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')">Hapus</button>

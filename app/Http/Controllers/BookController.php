@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Collection;
 use Illuminate\Http\Request;
 // use \Cviebrock\EloquentSluggable\Services\SlugService;
 
@@ -42,8 +43,13 @@ class BookController extends Controller
             'tahun_terbit' => 'required',
             'isbn' => 'required|unique:books',
             'kategori' => 'required',
-            'stok' => 'required'
+            'image' => 'required|image|file'
         ]);
+
+        if($request->file('image')){
+            $validateData['image'] = $request->file('image')->store('book-images');
+        }
+
         $validateData['user_id'] = auth()->user()->id;
         Book::create($validateData);
         return redirect('/dashboard/buku')->with('success',"Buku berhasil ditambahkan!");
@@ -51,17 +57,48 @@ class BookController extends Controller
 
     public function show(Book $book)
     {
-        //
+        return view('admin.book.show', [
+            'title' => 'Detail Buku ' . $book->judul,
+            'books' => $book,
+        ]);
     }
 
     public function edit(Book $book)
     {
-        //
+        return view('admin.book.edit', [
+            'title' => 'Edit Buku',
+            'books' => $book
+        ]);
     }
 
     public function update(Request $request, Book $book)
     {
-        //
+        $rules = [
+            'judul' => 'required',
+            'author' => 'required',
+            'publisher' => 'required',
+            'tahun_terbit' => 'required',
+            'kategori' => 'required',
+            'image' => 'required'
+        ];
+
+        // jika kode_buku nya berubah
+        if ($request->kode_buku != $book->kode_buku) {
+            $rules['kode_buku'] = 'required|size:6|unique:books';
+        }
+        // jika isbn nya berubah
+        if ($request->isbn != $book->isbn) {
+            $rules['isbn'] = 'required|unique:books';
+        }
+
+        $validateData = $request->validate($rules);
+        
+        $validateData['user_id'] = auth()->user()->id;
+
+        Book::where('id', $book->id)
+            ->update($validateData);
+
+        return redirect('/dashboard/buku')->with('success',"Buku berhasil diperbaharui!");
     }
 
     public function destroy(Book $book)
@@ -69,6 +106,22 @@ class BookController extends Controller
         Book::destroy($book->id);
         return redirect('/dashboard/buku')->with('success', 'Buku berhasil dihapus!');
     }
+
+    public function showCollection(Book $book)
+    {
+        return view('admin.book.collection.index', [
+            'title' => 'Detail Koleksi',
+            'books' => $book,
+            'collections' => Collection::filter(request(['search']))
+                                        ->where('buku_id', 'like', '%' . $book->id . '%')
+                                        ->paginate(5)->withQueryString()
+        ]);
+    }
+
+
+
+
+
 
     // public function checkSlug(Request $request)
     // {

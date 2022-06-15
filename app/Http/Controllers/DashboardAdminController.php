@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Member;
 use App\Models\Book;
+use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +18,7 @@ class DashboardAdminController extends Controller
         ]);
     }
 
-    public function listBuku() {
+    public function listBuku(Book $book) {
         return view('admin.book.index', [
             'title' => 'Daftar Buku',
             'books' => Book::filter(request(['search']))->paginate(5)->withQueryString()

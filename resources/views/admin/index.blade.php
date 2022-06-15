@@ -25,7 +25,7 @@
             <hr>
             <div class="row gap-3">
                 <a href="/dashboard/buku" class="col text-decoration-none text-black">
-                    <div class="card  shadow" style="background-color: rgb(49, 233, 110)">
+                    <div class="card shadow" style="background-color: rgb(49, 233, 110)">
                         <div class="card-body">
                             <p class="fs-3 fw-semibold">Buku</p>
                             <hr>
@@ -34,7 +34,7 @@
                     </div>
                 </a>
                 <a href="/dashboard/member" class="col text-decoration-none text-black">
-                    <div class="card  shadow" style="background-color: rgb(0, 164, 240)">
+                    <div class="card shadow" style="background-color: rgb(0, 164, 240)">
                         <div class="card-body">
                             <p class="fs-3 fw-semibold">Member</p>
                             <hr>
@@ -43,10 +43,11 @@
                     </div>
                 </a>
                 <a href="/dashboard/peminjaman" class="col text-decoration-none text-black">
-                    <div class="card  shadow" style="background-color: rgb(232, 248, 9)">
+                    <div class="card shadow" style="background-color: rgb(232, 248, 9)">
                         <div class="card-body">
-                            <p class="fs-3 fw-semibold">Peminjaman</p>
+                            <p class="fs-3 fw-semibold">Transaksi</p>
                             <hr>
+                            <p class="fs-5">{{-- $transaksi --}} Transaksi Terdaftar</p>
                         </div>
                     </div>
                 </a>

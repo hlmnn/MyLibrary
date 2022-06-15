@@ -22,7 +22,7 @@ return new class extends Migration
             $table->year('tahun_terbit');
             $table->string('isbn')->unique();
             $table->string('kategori');
-            $table->string('stok');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
