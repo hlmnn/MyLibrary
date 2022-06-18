@@ -42,12 +42,12 @@
                         </div>
                     </div>
                 </a>
-                <a href="/dashboard/peminjaman" class="col text-decoration-none text-black">
+                <a href="/dashboard/transaksi" class="col text-decoration-none text-black">
                     <div class="card shadow" style="background-color: rgb(232, 248, 9)">
                         <div class="card-body">
                             <p class="fs-3 fw-semibold">Transaksi</p>
                             <hr>
-                            <p class="fs-5">{{-- $transaksi --}} Transaksi Terdaftar</p>
+                            <p class="fs-5">{{ $circulations }} Transaksi Terdaftar</p>
                         </div>
                     </div>
                 </a>

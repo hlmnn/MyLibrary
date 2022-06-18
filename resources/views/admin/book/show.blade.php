@@ -27,7 +27,7 @@
             <hr>
             <div class="row gap-3">
                 <div class="col-3">
-                    <img src="{{  asset('storage/'.$books->image) }}" alt="{{ $books->judul }}" height="400">
+                    <img src="{{  asset('storage/'.$books->image) }}" alt="{{ $books->judul }}" height="400" width="300">
                 </div>
                 <div class="col">
                     <p><strong>Judul: </strong>{{ $books->judul }}</p>
@@ -38,7 +38,7 @@
                     <p><strong>Kategori: </strong>{{ $books->kategori }}</p>
                 </div>
                 <div class="col text-end">
-                    <a href="/dashboard/buku/detail/{{ $books->id }}/koleksi"><button type="button" class="btn btn-info">Koleksi</button></a>
+                    <a href="/dashboard/buku/detail/{{ $books->id }}/koleksi"><button type="button" class="btn btn-primary">Koleksi</button></a>
                     <a href="/dashboard/buku/{{ $books->id }}/edit/"><button type="button" class="btn btn-warning">Edit</button></a>
                     <form action="/dashboard/buku/{{ $books->id }}" method="post" class="d-inline">
                         @method('DELETE')

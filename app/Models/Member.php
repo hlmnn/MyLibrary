@@ -9,6 +9,7 @@ class Member extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    protected $with = ['circulation'];
 
     public function scopeFilter($query, array $filters)
     {
@@ -17,5 +18,10 @@ class Member extends Model
                     ->orWhere('nama', 'like', '%' . $search . '%')
                     ->orWhere('nomor', 'like', '%' . $search . '%');
         });
+    }
+
+    public function circulation()
+    {
+        return $this->belongsTo(Circulation::class);
     }
 }

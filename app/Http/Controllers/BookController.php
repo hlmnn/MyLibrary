@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 // use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class BookController extends Controller
@@ -59,7 +60,7 @@ class BookController extends Controller
     {
         return view('admin.book.show', [
             'title' => 'Detail Buku ' . $book->judul,
-            'books' => $book,
+            'books' => $book
         ]);
     }
 
@@ -79,7 +80,7 @@ class BookController extends Controller
             'publisher' => 'required',
             'tahun_terbit' => 'required',
             'kategori' => 'required',
-            'image' => 'required'
+            'image' => 'required|image|file'
         ];
 
         // jika kode_buku nya berubah
@@ -90,19 +91,28 @@ class BookController extends Controller
         if ($request->isbn != $book->isbn) {
             $rules['isbn'] = 'required|unique:books';
         }
-
+        
         $validateData = $request->validate($rules);
         
-        $validateData['user_id'] = auth()->user()->id;
-
-        Book::where('id', $book->id)
-            ->update($validateData);
+        // jika image nya berubah
+        if ($request->file('image')) {
+            if ($request->old_image) {
+                Storage::delete($request->old_image);
+            }
+            $validateData['image'] = $request->file('image')->store('book-images');
+        }
+        
+        Book::where('id', $book->id)->update($validateData);
 
         return redirect('/dashboard/buku')->with('success',"Buku berhasil diperbaharui!");
     }
 
     public function destroy(Book $book)
     {
+        // cek image, jika ada hapus
+        if ($book->image) {
+            Storage::delete($book->image);
+        }
         Book::destroy($book->id);
         return redirect('/dashboard/buku')->with('success', 'Buku berhasil dihapus!');
     }
@@ -112,9 +122,7 @@ class BookController extends Controller
         return view('admin.book.collection.index', [
             'title' => 'Detail Koleksi',
             'books' => $book,
-            'collections' => Collection::filter(request(['search']))
-                                        ->where('buku_id', 'like', '%' . $book->id . '%')
-                                        ->paginate(5)->withQueryString()
+            'collections' => Collection::where('buku_id', 'like', '%' . $book->id . '%')->filter(request(['search']))->paginate(5)->withQueryString()
         ]);
     }
 

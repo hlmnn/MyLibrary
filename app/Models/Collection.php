@@ -12,11 +12,6 @@ class Collection extends Model
     protected $guarded = ['id'];
     protected $with = ['book'];
 
-    public function book()
-    {
-        return $this->belongsTo(Book::class);
-    }
-
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? false, function($query, $search) {
@@ -26,5 +21,10 @@ class Collection extends Model
                     ->orWhere('lokasi', 'like', '%' . $search . '%')
                     ->orWhere('status', 'like', '%' . $search . '%');
         });
+    }
+
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
     }
 }

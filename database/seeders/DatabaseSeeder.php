@@ -8,6 +8,9 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Member;
 use App\Models\Book;
+use App\Models\Collection;
+use App\Models\Circulation;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,12 +23,8 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         User::create([
+            'name' => 'Hilman Fauzi',
             'username' => 'admin',
             'email' => 'admin@email.com',
             'password' => Hash::make("password")
@@ -39,13 +38,31 @@ class DatabaseSeeder extends Seeder
 
         Book::create([
             'kode_buku' => 'KB0001',
-            'judul' => 'Ieu Ngetes Judul Buku nu Kahiji',
-            'author' => 'Mang Dadang',
-            'publisher' => 'Nalaktak',
-            'tahun_terbit' => '2002',
-            'isbn' => '	0-021-69073-5',
+            'judul' => 'The Elder Scroll V: Skyrim',
+            'author' => 'Bethesda',
+            'publisher' => 'Bethesda',
+            'tahun_terbit' => '2011',
+            'isbn' => '0-021-69073-5',
             'kategori' => 'Fiksi',
-            'image' => 'SMoVGUxYl11Wj9e4eo8uP9LAlBmKVitajtJTSYdA.jpg',
+            'image' => 'book-images/LlQz1bQgAHx7KmPyNbEZAkARloEcnJ6mbcC4ae4h.png',
+        ]);
+
+        Collection::create([
+            'kode_koleksi' => 'KK0001',
+            'buku_id' => '1',
+            'noreg' => 'NR0001',
+            'lokasi' => 'R.01',
+            'kondisi' => 'Baik',
+            'status' => 'Tersedia'
+        ]);
+
+        Collection::create([
+            'kode_koleksi' => 'KK0002',
+            'buku_id' => '1',
+            'noreg' => 'NR0002',
+            'lokasi' => 'R.02',
+            'kondisi' => 'Baik',
+            'status' => 'Tersedia'
         ]);
     }
 

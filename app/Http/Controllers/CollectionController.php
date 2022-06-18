@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class CollectionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     // public function index()
     // {
     //     return view('admin.book.collection.index', [
@@ -20,11 +15,6 @@ class CollectionController extends Controller
     //     ]);
     // }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Book $book)
     {
         return view('admin.book.collection.insert', [
@@ -33,12 +23,6 @@ class CollectionController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, Book $book)
     {
         // dd($request);
@@ -56,23 +40,6 @@ class CollectionController extends Controller
         return redirect('/dashboard/buku/detail/'.$book->id.'/koleksi')->with('success',"Koleksi berhasil ditambahkan!");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Collection  $collection
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Collection $collection)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Collection  $collection
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Book $book, Collection $collection)
     {
         return view('admin.book.collection.edit', [
@@ -82,24 +49,31 @@ class CollectionController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Collection  $collection
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Collection $collection)
+    public function update (Request $request, Collection $collection)
     {
-        //
+        $rules = [
+            'buku_id' => 'required',
+            'lokasi' => 'required',
+            'kondisi' => 'required'
+        ];
+        $kode = $request->buku_id;
+
+        // jika kode_buku nya berubah
+        if ($request->kode_koleksi != $collection->kode_koleksi) {
+            $rules['kode_koleksi'] = 'required|size:6|unique:collections';
+        }
+        // jika isbn nya berubah
+        if ($request->noreg != $collection->noreg) {
+            $rules['noreg'] = 'required|size:6|unique:collections';
+        }
+
+        $validateData = $request->validate($rules);
+
+        Collection::where('id', $collection->id)->update($validateData);
+
+        return redirect('/dashboard/buku/detail/'.$kode.'/koleksi')->with('success',"Koleksi berhasil diperbaharui!");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Collection  $collection
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Book $book, Collection $collection)
     {
         Collection::destroy($collection->id);

@@ -64,7 +64,6 @@
                                     <td>{{ $collection->status }}</td>
                                     <td>
                                         <div>
-                                            <a href="/dashboard/buku/detail/{{ $collection->id }}"><button type="button" class="btn btn-success">Pinjam</button></a>
                                             <a href="/dashboard/buku/detail/{{ $books->id }}/koleksi/{{ $collection->id }}/edit/"><button type="button" class="btn btn-warning">Edit</button></a>
                                             <form action="/dashboard/buku/detail/{{ $books->id }}/koleksi/{{ $collection->id }}" method="post" class="d-inline">
                                                 @method('DELETE')

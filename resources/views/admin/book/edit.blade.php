@@ -20,8 +20,8 @@
             </div>
             <hr>
             <div class="row gap-3">
-                <form action="/dashboard/buku/{{ $books->id }}" method="post">
-                    @method('put')
+                <form action="/dashboard/buku/{{ $books->id }}" method="post" enctype="multipart/form-data">
+                    @method('PUT')
                     @csrf
                     <div class="form-group row mb-2">
                         <label for="kode_buku" class="col-sm-2 col-form-label">Kode Buku</label>
@@ -102,10 +102,11 @@
                         </div>
                     </div>
                     <div class="form-group row mb-2">
-                        <label for="stok" class="col-sm-2 col-form-label">Stok Tersedia</label>
+                        <label for="image" class="col-sm-2 col-form-label">Foto</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control @error('stok') is-invalid @enderror" name="stok" id="stok" placeholder="Masukan stok.." value="{{ old('stok', $books->stok) }}">
-                            @error('stok')
+                            <input type="hidden" name="old_image" value="{{ $books->image }}">
+                            <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" id="image" placeholder="Masukan foto.." value="{{ old('image') }}">
+                            @error('image')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -113,7 +114,6 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end mt-4">
-                        <a href="/dashboard/member"><button class="btn btn-wide btn-danger shadow me-3" type="cancel">Batal</button></a>
                         <button class="btn btn-wide btn-success shadow" type="submit">Simpan</button>
                     </div>
                 </form>

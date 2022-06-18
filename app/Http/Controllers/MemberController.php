@@ -36,14 +36,6 @@ class MemberController extends Controller
 
     public function update (Request $request, Member $member)
     {
-        // $validateData = $request->validate([
-        //     'kode_member' => 'required|size:6|unique:members, kode_mahasiswa,'.$member->id,
-        //     'nama' => 'required',
-        //     'nomor' => 'required|unique:members'
-        // ]);
-        // $member->update($validateData);
-        // return redirect('/dashboard/member')->with('success',"Member berhasil diubah!");
-        dd($request);
         $rules = [
             'nama' => 'required',
         ];
@@ -58,8 +50,6 @@ class MemberController extends Controller
         }
 
         $validateData = $request->validate($rules);
-        
-        $validateData['user_id'] = auth()->user()->id;
 
         Member::where('id', $member->id)->update($validateData);
 

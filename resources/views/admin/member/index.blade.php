@@ -12,7 +12,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Member</li>
+                    <li class="breadcrumb-item active">Daftar Member</li>
                     {{-- <li class="breadcrumb-item active" aria-current="page">Data</li> --}}
                 </ol>
             </nav>
@@ -21,7 +21,7 @@
         {{-- bagian dashboard --}}
         <div class="dashboard">
             <div class="d-flex gap-3">
-                <h2>Member</h2>
+                <h2>Daftar Member</h2>
                 <a href="/dashboard/member/tambah"><button type="button" class="btn btn-primary shadow">Tambah Member</button></a>
             </div>
             <div class="row">
