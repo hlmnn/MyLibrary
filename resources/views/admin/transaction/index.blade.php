@@ -114,7 +114,7 @@
                     </table>
                 </div>
                 <div class="d-flex justify-content-start">
-                    {{-- {{ $transactions->links() }} --}}
+                    {{ $circulations->links() }}
                 </div>
             </div>
         </div>

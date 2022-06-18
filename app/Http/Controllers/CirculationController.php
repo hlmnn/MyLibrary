@@ -38,6 +38,8 @@ class CirculationController extends Controller
 
         $collection = Collection::firstWhere('kode_koleksi', $request->kode_koleksi);
         $validateData['koleksi_id'] = $collection->id;
+        $collection->status = 'Sedang Dipinjam';
+        $collection->save();
 
         $validateData['tgl_kembali'] = Carbon::parse($validateData['tgl_pinjam'])->addDay($validateData['durasi']);
 
