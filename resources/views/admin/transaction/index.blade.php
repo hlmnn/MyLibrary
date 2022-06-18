@@ -32,9 +32,9 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <form action="/dashboard/member">
+                    <form action="/dashboard/transaksi">
                         <div class="input-group ">
-                            <input type="text" class="form-control" placeholder="Cari member..." name="search">
+                            <input type="text" class="form-control" placeholder="Cari transaksi..." name="search">
                             <button class="btn btn-primary" type="submit">Cari</button>
                         </div>
                     </form>

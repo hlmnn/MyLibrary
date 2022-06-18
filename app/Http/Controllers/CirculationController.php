@@ -29,18 +29,15 @@ class CirculationController extends Controller
             'durasi' => 'required'
         ]);
         
-
-        // $circulation = Circulation::firstWhere('koleksi_id', $collection->id);
+        $member = Member::firstWhere('id', $request->member_id);
+        $cekMember = Circulation::where([['member_id', $member->id], ['status', 'Dipinjam']]);
+        // jika member nya sudah meminjam buku sebanyak 3 kali
+        if ($cekMember->count() >= 3) {
+            return redirect('/dashboard/transaksi')->with('failed',"Member ini telah melebihi batas peminjaman!");
+        }
 
         $collection = Collection::firstWhere('kode_koleksi', $request->kode_koleksi);
-        // $circulation = Circulation::firstWhere('koleksi_id', $collection->id);
-        // if ($circulation->koleksi_id == $collection->id) {
-        //     return redirect('/dashboard/transaksi')->with('failed',"Transaksi gagal karena Koleksi sudah dipinjam!");
-        // } 
-
         $validateData['koleksi_id'] = $collection->id;
-        $collection->status = 'Sedang Dipinjam';
-        $collection->save();
 
         $validateData['tgl_kembali'] = Carbon::parse($validateData['tgl_pinjam'])->addDay($validateData['durasi']);
 
